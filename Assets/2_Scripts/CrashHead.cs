@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CrashHead : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class CrashHead : MonoBehaviour
         if (collision.collider.CompareTag("Ground"))
         {
             Debug.Log("À¡À¡");
+            SceneManager.LoadScene(0);
         }
     }
 }
