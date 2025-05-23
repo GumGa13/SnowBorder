@@ -3,13 +3,20 @@ using UnityEngine.SceneManagement;
 
 public class CrashHead : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    [SerializeField] private float reloadDelay = 1f;
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // ¹Ù´Ú ¿ÀºêÁ§Æ®¿¡ "Ground" ÅÂ±×°¡ ÀÖ´Ù°í °¡Á¤
-        if (collision.collider.CompareTag("Ground"))
+        if (other.CompareTag("Ground"))
         {
-            Debug.Log("À¡À¡");
-            SceneManager.LoadScene(0);
+            Debug.Log("À¡À¡!");
+            Invoke(nameof(ReloadScene), reloadDelay);
         }
+
+    }
+
+    void ReloadScene()
+    {
+        SceneManager.LoadScene(0);
     }
 }
