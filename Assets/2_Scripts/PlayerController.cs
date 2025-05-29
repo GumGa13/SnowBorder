@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private SurfaceEffector2D surfaceEffector2D;
     private bool isBoosting = false;
+    private bool isRuning = true;
 
     [SerializeField]
     private float torqueAmount = 10f; // 회전력의 크기 (Inspector에서 설정 가능)
@@ -46,9 +47,11 @@ public class PlayerController : MonoBehaviour
         isBoosting = Input.GetKey(KeyCode.UpArrow);
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        switch(currentKey)
+        if (!isRuning) return;
+
+        switch (currentKey)
         {
             case InputKey.left:
                 rb.AddTorque(torqueForce);
@@ -62,6 +65,7 @@ public class PlayerController : MonoBehaviour
 
         surfaceEffector2D.speed = isBoosting ? boostSpeed : baseSpeed;
     }
+
     private void ApplyTorque(float torque)
     {
         // Torque가 0이 아닐 때만 적용
@@ -69,5 +73,10 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddTorque(torque);
         }
+    }
+
+    public void GameOver()
+    {
+        isRuning = false;
     }
 }

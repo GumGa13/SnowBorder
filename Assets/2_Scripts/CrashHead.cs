@@ -4,16 +4,27 @@ using UnityEngine.SceneManagement;
 public class CrashHead : MonoBehaviour
 {
     [SerializeField] private float reloadDelay = 1f;
-    [SerializeField] private ParticleSystem crashEffect; // ≈©∑°Ω¨ ¿Ã∆Â∆Æ
+    [SerializeField] private ParticleSystem crashEffect;
+    [SerializeField] private AudioClip CrashSound;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private AudioSource audioSource;
+    private PlayerController playerController;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        playerController = GetComponent<PlayerController>();   
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Ground"))
         {
             Debug.Log("¿°¿°!");
 
             crashEffect.Play();
-
+            audioSource.PlayOneShot(CrashSound); 
+            playerController.GameOver();
             Invoke(nameof(ReloadScene), reloadDelay);
         }
     }
